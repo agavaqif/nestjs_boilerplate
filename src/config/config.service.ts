@@ -22,6 +22,10 @@ class ConfigService {
       synchronize: true,
     };
   }
+
+  public getJWTSecret(): string {
+    return process.env.JWT_SECRET
+  }
 }
 
 const configService = new ConfigService();
