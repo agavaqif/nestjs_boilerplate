@@ -1,6 +1,6 @@
 export interface Response {
     type: ResponseType;
-    status: number;
+    statusCode: number;
     payload: any;
 }
 
@@ -13,11 +13,11 @@ export enum ResponseType {
 
 export class ResponseObject {
     private     type: ResponseType;
-    private     status: number;
+    private     statusCode: number;
     private     payload: any;
-    constructor(type: ResponseType,status: number,payload: any ) {
+    constructor(type: ResponseType,statusCode: number,payload: any ) {
         this.type = type;
-        this.status = status;
+        this.statusCode = statusCode;
         this.payload = payload;
     }
 }
