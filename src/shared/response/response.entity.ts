@@ -1,23 +1,16 @@
-export interface Response {
-    type: ResponseType;
-    statusCode: number;
-    payload: any;
+export interface ResponseError {
+    code: string,
+    field: string,
+    message: string
 }
-
-export enum ResponseType {
-    SUCCESS = 'success',
-    ERROR = 'error',
-    ALERT = 'alert'
-}
-
 
 export class ResponseObject {
-    private     type: ResponseType;
-    private     statusCode: number;
-    private     payload: any;
-    constructor(type: ResponseType,statusCode: number,payload: any ) {
-        this.type = type;
-        this.statusCode = statusCode;
+    private     success: boolean;
+    private     errors?: ResponseError[];
+    private     payload?: any;
+    constructor(success:boolean,payload:any={} ,errors:any[] = []) {
+        this.success = success;
+        this.errors  = errors;
         this.payload = payload;
     }
 }
