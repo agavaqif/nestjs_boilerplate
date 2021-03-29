@@ -14,7 +14,6 @@ export class BaseUserDto {
     @Column({unique: true,update:false})
     @IsNotEmpty({message:"Email cant be empty"})
     @IsEmail({},{message: "Please use email format"})
-    @Validate(IsUserAlreadyExist)
     email:string;
 
     @Column({select: false})

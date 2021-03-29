@@ -12,6 +12,7 @@ export class IsUserAlreadyExist implements ValidatorConstraintInterface {
 	
     constructor(private readonly moduleRef: ModuleRef) { }
 	async validate(text: string) {
+        if (text == undefined) return true;
         if (!this.userService) {
             this.userService = this.moduleRef.get('UserService');
           }
@@ -24,3 +25,16 @@ export class IsUserAlreadyExist implements ValidatorConstraintInterface {
 
 }
 
+@ValidatorConstraint({ name: 'cantUpdateEmail'})
+export class CantUpdateEmail implements ValidatorConstraintInterface {
+	
+    constructor() { }
+	validate(text: string) {
+        console.log("Text is",text)
+		return false;
+	}
+    defaultMessage(args: ValidationArguments) {
+        return "Email can't be updated";
+      }
+
+}
