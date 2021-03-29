@@ -4,8 +4,9 @@ import {Injectable} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { ModuleRef } from '@nestjs/core';
+import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
 
-@ValidatorConstraint({ name: 'isUserAlreadyExist', async: true })
+@ValidatorConstraint({ name: ErrorCode.NOT_UNIQUE, async: true })
 @Injectable()
 export class IsUserAlreadyExist implements ValidatorConstraintInterface {
     private userService: UserService
@@ -20,12 +21,12 @@ export class IsUserAlreadyExist implements ValidatorConstraintInterface {
 		return !this.userService.findByEmail(text);
 	}
     defaultMessage(args: ValidationArguments) {
-        return 'User with this email already exists.';
+        return `User Email ${ErrorMessage.NOT_UNIQUE}`;
       }
 
 }
 
-@ValidatorConstraint({ name: 'cantUpdateEmail'})
+@ValidatorConstraint({ name: ErrorCode.CANT_UPDATE})
 export class CantUpdateEmail implements ValidatorConstraintInterface {
 	
     constructor() { }
@@ -34,7 +35,7 @@ export class CantUpdateEmail implements ValidatorConstraintInterface {
 		return false;
 	}
     defaultMessage(args: ValidationArguments) {
-        return "Email can't be updated";
+        return `Email ${ErrorMessage.CANT_UPDATE}`;
       }
 
 }
