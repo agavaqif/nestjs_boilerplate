@@ -18,7 +18,9 @@ export class IsUserAlreadyExist implements ValidatorConstraintInterface {
             this.userService = this.moduleRef.get('UserService');
           }
         console.log("Text is",text)
-		return !this.userService.findByEmail(text);
+        let user:User = await this.userService.findByEmail(text);
+        console.log(user)
+		return user==undefined;
 	}
     defaultMessage(args: ValidationArguments) {
         return `User Email ${ErrorMessage.NOT_UNIQUE}`;

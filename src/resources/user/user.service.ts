@@ -14,12 +14,7 @@ export class UserService {
     private authService: AuthService
   ){}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const hashedPassword: string = await this.authService.hashPassword(createUserDto.password);
-    createUserDto.password = hashedPassword;
-    const entityManager = getManager();
-    
-    
+  async create(createUserDto: CreateUserDto): Promise<User> {    
     const savedUser = await this.userRepository.save(this.userRepository.create(createUserDto));
     return savedUser;
   }
@@ -35,7 +30,7 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user: User = await this.userRepository.findOneOrFail({email});
+    const user: User = await this.userRepository.findOne({email});
     return user;
   }
 
