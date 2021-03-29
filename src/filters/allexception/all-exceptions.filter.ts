@@ -1,8 +1,10 @@
 
-import { Catch, ArgumentsHost, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
+import { Catch, ArgumentsHost, HttpStatus } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
+import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
 import { ValidationError } from 'src/pipes/validationpipes/validation.error';
-import { ResponseError, ResponseObject } from 'src/shared/response/response.entity';
+import { ResponseObject } from 'src/shared/response/response.entity';
+import { buildErrorResponse } from 'src/shared/utils/error-build.util';
 import { extractKeyFromError } from 'src/shared/utils/utils.service';
 import { EntityNotFoundError } from 'typeorm';
 
@@ -29,40 +31,16 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
       }
     
     handleEntityNotFound(exception: any, response: any) {
-        let errors = [];
-        let currentError:ResponseError = {
-          code: "notFound",
-          field: '',
-          message: 'Resource was not found'
-        }
-        errors.push(currentError);
-        let  responseObject:ResponseObject = new ResponseObject(false,{},errors);
-        return response.status(HttpStatus.CONFLICT).json(responseObject);
+        return response.status(HttpStatus.CONFLICT).json(buildErrorResponse(ErrorCode.NOT_FOUND,'',ErrorMessage.NOT_FOUND));
     }
 
     handleUniqueConstraint(exception: any, response: any) {
         let field = extractKeyFromError(exception.detail)
-        let errors = [];
-        let currentError:ResponseError = {
-          code: "notUnique",
-          field: field,
-          message: field + ' is not unique'
-        }
-        errors.push(currentError);
-        let  responseObject:ResponseObject = new ResponseObject(false,{},errors);
-        return response.status(HttpStatus.CONFLICT).json(responseObject);
+        return response.status(HttpStatus.CONFLICT).json(buildErrorResponse(ErrorCode.NOT_UNIQUE,field,`${field} ${ErrorMessage.NOT_UNIQUE}`));
     }  
 
     handleServerErrors(exception: any, response: any) {
-      let errors = [];
-        let currentError:ResponseError = {
-          code: "serverError",
-          field: '',
-          message: 'ServerError'
-        }
-        errors.push(currentError);
-        let  responseObject:ResponseObject = new ResponseObject(false,{},errors);
-        return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json(responseObject);
+        return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json(buildErrorResponse(ErrorCode.SERVER_ERROR,'',ErrorMessage.SERVER_ERROR));
     }
 
     handleValidationErrors(exception: ValidationError, response:any){
