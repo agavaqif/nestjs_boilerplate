@@ -3,7 +3,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { configService } from 'src/config/config.service';
 import { AuthService } from './service/auth.service';
 
-console.log(configService.getJWTSecret())
 @Module({
   imports: [
     JwtModule.register({

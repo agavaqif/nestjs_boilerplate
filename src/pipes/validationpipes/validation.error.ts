@@ -17,7 +17,6 @@ class ValidationError extends Error {
     }
 
     public getErrors(): any {
-        console.log("Response is",this.errors)
         return this.errors;
     }
 

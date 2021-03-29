@@ -5,7 +5,7 @@ import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
 import { ValidationError } from 'src/pipes/validationpipes/validation.error';
 import { ResponseObject } from 'src/shared/response/response.entity';
 import { buildErrorResponse } from 'src/shared/utils/error-build.util';
-import { extractKeyFromError } from 'src/shared/utils/utils.service';
+import { extractKeyFromError } from 'src/shared/utils/object-functions.util';
 import { EntityNotFoundError } from 'typeorm';
 
 @Catch()
@@ -14,8 +14,6 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
-        console.log(exception)
-        console.log(exception instanceof EntityNotFoundError)
         if(exception instanceof EntityNotFoundError) {
           return this.handleEntityNotFound(exception,response);
         }

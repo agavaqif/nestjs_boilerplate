@@ -4,6 +4,7 @@ import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import {ValidationError} from './validation.error'
 import { ResponseError } from 'src/shared/response/response.entity';
+import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
 @Injectable()
 export class CustomValidationPipe implements PipeTransform<any> {
   async transform(value, metadata: ArgumentMetadata) {
@@ -24,12 +25,10 @@ export class CustomValidationPipe implements PipeTransform<any> {
   }
 
   private buildError(errors) {
-    console.log(errors)
     const result: ResponseError[] = [];
     errors.forEach(er =>{
       let prop = er.property;
       Object.entries(er.constraints).forEach(constraint=>{
-        console.log(constraint)
           let currentError: ResponseError = {
             code: constraint[0],
             field: prop,
@@ -38,7 +37,6 @@ export class CustomValidationPipe implements PipeTransform<any> {
           result.push(currentError);
       })
     })
-    console.log("Result",result)
     return result;
   }
 
@@ -46,9 +44,9 @@ export class CustomValidationPipe implements PipeTransform<any> {
   private buildEmptyDataError() {
     const result: ResponseError[] = [];
     let currentError: ResponseError = {
-      code: "noData",
+      code: ErrorCode.NO_DATA,
       field: "",
-      message: "No Data Submitted"
+      message: ErrorMessage.NO_DATA
     }
     result.push(currentError);
     return result;

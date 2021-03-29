@@ -10,10 +10,3 @@ export function extractKeyFromError(s:string): string {
     return  key.charAt(0).toUpperCase() + key.slice(1)
 }
 
-export function buildUniqueConstraintError(detail: string){
-    const result = {
-        "isNotUnique": extractKeyFromError(detail)
-    }
-    return result;
-}
- 
