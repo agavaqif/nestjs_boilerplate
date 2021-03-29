@@ -34,6 +34,11 @@ export class UserService {
     return user;
   }
 
+  async findByEmail(email: string): Promise<User> {
+    const user: User = await this.userRepository.findOneOrFail({email});
+    return user;
+  }
+
   async update(id: number, user: UpdateUserDto): Promise<boolean> {
       await this.userRepository.findOneOrFail({id});
       await this.userRepository.update(id, this.userRepository.create(user));
