@@ -1,7 +1,8 @@
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, Validate } from "class-validator";
 import { AuthService } from "src/shared/auth/service/auth.service";
 import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryColumn } from "typeorm";
 import { UserRole } from "../entities/user_role.interface";
+import { IsUserAlreadyExist } from "../user.validator";
 
 @Entity('user')
 export class BaseUserDto {
@@ -13,6 +14,7 @@ export class BaseUserDto {
     @Column({unique: true,update:false})
     @IsNotEmpty({message:"Email cant be empty"})
     @IsEmail({},{message: "Please use email format"})
+    @Validate(IsUserAlreadyExist)
     email:string;
 
     @Column({select: false})

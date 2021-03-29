@@ -4,6 +4,8 @@ import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { AuthModule } from 'src/shared/auth/auth.module';
+import { IsUserAlreadyExist } from './user.validator';
+import { getFromContainer, Repository } from 'typeorm';
 
 @Module({
   imports: [
@@ -11,6 +13,6 @@ import { AuthModule } from 'src/shared/auth/auth.module';
     AuthModule
   ],
   controllers: [UserController],
-  providers: [UserService]
+  providers: [UserService,IsUserAlreadyExist]
 })
 export class UserModule {}
