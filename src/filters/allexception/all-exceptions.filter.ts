@@ -14,6 +14,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
+        console.log(exception)
         if(exception instanceof EntityNotFoundError) {
           return this.handleEntityNotFound(exception,response);
         }
