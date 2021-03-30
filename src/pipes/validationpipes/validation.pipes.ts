@@ -8,13 +8,17 @@ import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
 @Injectable()
 export class CustomValidationPipe implements PipeTransform<any> {
   async transform(value, metadata: ArgumentMetadata) {
-    if (!value) {
-      throw new ValidationError( this.buildEmptyDataError())
-    }
+    console.log("AAAAA",value)
+    console.log(metadata)
+   
 
     const { metatype } = metadata;
     if (!metatype || !this.toValidate(metatype)) {
       return value;
+    }
+
+    if (!value) {
+      throw new ValidationError( this.buildEmptyDataError())
     }
     const object = plainToClass(metatype, value);
     const errors = await validate(object);
