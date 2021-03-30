@@ -8,18 +8,6 @@ import { User } from 'src/resources/user/entities/user.entity';
 export class AuthService {
     constructor(private jwtService: JwtService) {}
 
-    // generateJWT(user: User): Observable <string> {
-    //     return from(this.jwtService.signAsync({user}));
-    // }
-
-    // hashPassword(password: string): Observable<string> {
-    //     return from<string>(bcrypt.hash(password,12));
-    // }
-
-    // comparePasswords(newPassword: string, passwordHash: string): Observable<any> {
-    //     return from<boolean | any>(bcrypt.compare(newPassword, passwordHash))
-    // }
-
     generateJWT(user: User): Promise <string> {
         return this.jwtService.signAsync({user});
     }
@@ -31,4 +19,5 @@ export class AuthService {
     comparePasswordsAs(newPassword: string, passwordHash: string): Promise<any> {
         return bcrypt.compare(newPassword,passwordHash )
     }
+
 }
