@@ -3,8 +3,6 @@ import { IsEmail, IsNotEmpty, Validate } from "class-validator";
 import { Column, Entity } from "typeorm";
 import { UserRole } from "../entities/user_role.interface";
 
-
-
 @Injectable()
 @Entity('user')
 export class BaseUserDto {

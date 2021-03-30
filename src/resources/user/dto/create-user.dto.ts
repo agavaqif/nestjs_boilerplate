@@ -9,8 +9,15 @@ import { IsUserAlreadyExist } from "../user.validator";
 
 @Entity('user')
 export class CreateUserDto extends BaseUserDto {
-    @IsNotEmpty({message:"Email cant be empty"})
+
+    @IsNotEmpty({message: "Please provide name"})
+    name:string
+
+    @IsNotEmpty({message:"Please provide email"})
     @IsEmail({},{message: "Please use email format"})
     @Validate(IsUserAlreadyExist)
     email:string
+
+    @IsNotEmpty({message: "Please provide password"})
+    password:string
 }

@@ -4,7 +4,7 @@ import { BaseExceptionFilter } from '@nestjs/core';
 import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
 import { ValidationError } from 'src/pipes/validationpipes/validation.error';
 import { ResponseObject } from 'src/shared/response/response.entity';
-import { buildErrorResponse } from 'src/shared/utils/error-build.util';
+import { buildErrorResponse } from 'src/shared/response/response.service';
 import { extractKeyFromError } from 'src/shared/utils/object-functions.util';
 import { EntityNotFoundError } from 'typeorm';
 

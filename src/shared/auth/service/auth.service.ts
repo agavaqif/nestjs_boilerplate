@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { from, Observable } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/resources/user/entities/user.entity';
 
