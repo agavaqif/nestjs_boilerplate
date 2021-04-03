@@ -14,7 +14,16 @@ export function returnAlert(code: string, title: string, detail: string): Respon
     return new ResponseObject(true, errors);    
 }
 
-
+export function buildErrors(code: string, field: string, message:string) {
+    let errors = [];
+    let currentError:ResponseError = {
+        code: code,
+        field: field,
+        message: message
+    }
+    errors.push(currentError);
+    return errors;
+}
 export function buildErrorResponse(code: string, field: string, message:string): ResponseObject {
     let errors = [];
     let currentError:ResponseError = {

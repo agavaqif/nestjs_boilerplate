@@ -10,6 +10,9 @@ import {
   Pagination,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
+import { LoginUserDto } from './dto/login-user.dto';
+import { ValidationError } from 'src/pipes/validationpipes/validation.error';
+import { buildErrorResponse, buildErrors } from 'src/shared/response/response.service';
 
 @Injectable()
 export class UserService {
@@ -21,6 +24,7 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {    
     const savedUser = await this.userRepository.save(this.userRepository.create(createUserDto));
+    delete savedUser.password;
     return savedUser;
   }
 
@@ -54,5 +58,25 @@ export class UserService {
     await this.userRepository.delete({id});
     return true;
   }
+
+  async login(loginDto:LoginUserDto): Promise<User> {
+    const user: User = await this.findByEmailWhole(loginDto.email);
+    if(user) {
+      console.log("User is ",user);
+      console.log("Loginf dto", loginDto)
+      let passwordMatch =await this.authService.comparePasswords(loginDto.password, user.password);
+      if (!passwordMatch) throw new ValidationError(buildErrors("notFound","Password","Password Not found"));
+      delete user.password;
+      return user;
+    }else {
+      throw new ValidationError(buildErrors("notFound","Email","Email Not found"));
+    }
+  }
+
+  async findByEmailWhole(email: string): Promise<User> {
+    return this.userRepository.findOne({email}, {select: ['id', 'password', 'name', 'email', 'role']});
+}
+
+  
 
 }

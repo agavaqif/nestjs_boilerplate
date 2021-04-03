@@ -4,7 +4,7 @@ import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { AuthModule } from 'src/shared/auth/auth.module';
-import { IsUserAlreadyExist,CantUpdateEmail } from './user.validator';
+import { IsUserAlreadyExist,CantUpdateEmail} from './user.validator';
 import { UserSubscriber } from './entities/user.subscriber';
 
 @Module({

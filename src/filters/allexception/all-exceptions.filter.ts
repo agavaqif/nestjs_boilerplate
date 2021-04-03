@@ -1,5 +1,5 @@
 
-import { Catch, ArgumentsHost, HttpStatus } from '@nestjs/common';
+import { Catch, ArgumentsHost, HttpStatus, NotFoundException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
 import { ValidationError } from 'src/pipes/validationpipes/validation.error';
@@ -15,6 +15,9 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
         const response = ctx.getResponse();
         const request = ctx.getRequest();
         console.log(exception)
+        if(exception instanceof NotFoundException) {
+          return this.handleNotFound(exception,response);
+        }
         if(exception instanceof EntityNotFoundError) {
           return this.handleEntityNotFound(exception,response);
         }
@@ -28,7 +31,9 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
           return this.handleServerErrors(exception, response);
         }
       }
-    
+    handleNotFound(exception: any, response: any) {
+      return response.status(HttpStatus.CONFLICT).json(buildErrorResponse(ErrorCode.NOT_FOUND,'',exception.message));
+    }
     handleEntityNotFound(exception: any, response: any) {
         return response.status(HttpStatus.CONFLICT).json(buildErrorResponse(ErrorCode.NOT_FOUND,'',ErrorMessage.NOT_FOUND));
     }
