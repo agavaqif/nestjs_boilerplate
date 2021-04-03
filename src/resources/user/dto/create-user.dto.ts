@@ -1,6 +1,5 @@
 import { IsEmail, IsNotEmpty } from "class-validator";
-import { BeforeInsert, Column, Entity, PrimaryColumn } from "typeorm";
-import { UserRole } from "../entities/user_role.interface";
+import { Entity } from "typeorm";
 import { BaseUserDto } from "./base-user.dto";
 import { Validate } from 'class-validator';
 import { IsUserAlreadyExist } from "../user.validator";

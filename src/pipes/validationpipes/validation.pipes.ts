@@ -4,7 +4,7 @@ import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { ValidationError } from '../../shared/response/validation-error.class'
 import { ResponseError } from 'src/shared/response/response.class';
-import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
+import { ErrorCode, ErrorMessage } from 'src/enums/error-code.enum';
 
 /**
  * Validation pipeline which works with class-validator. Catch validation issues and throw

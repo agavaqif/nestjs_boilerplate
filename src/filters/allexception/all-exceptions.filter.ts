@@ -1,7 +1,7 @@
 
 import { Catch, ArgumentsHost, HttpStatus, NotFoundException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
+import { ErrorCode, ErrorMessage } from 'src/enums/error-code.enum';
 import { ValidationError } from 'src/shared/response/validation-error.class';
 import { ResponseObject } from 'src/shared/response/response.class';
 import { buildErrorResponse } from 'src/shared/response/response.service';

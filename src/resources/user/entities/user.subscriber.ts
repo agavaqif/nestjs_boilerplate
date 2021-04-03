@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/typeorm';
 import { AuthService } from 'src/shared/auth/service/auth.service';
 import {
-    EventSubscriber,
     EntitySubscriberInterface,
     InsertEvent,
     UpdateEvent,

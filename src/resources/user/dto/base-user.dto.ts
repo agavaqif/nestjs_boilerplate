@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { IsEmail, IsNotEmpty, Validate } from "class-validator";
+import { UserRole } from "src/enums/user-role.enum";
 import { Column, Entity } from "typeorm";
-import { UserRole } from "../entities/user_role.interface";
 
 @Injectable()
 @Entity('user')
