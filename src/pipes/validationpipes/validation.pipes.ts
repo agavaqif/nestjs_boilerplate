@@ -1,17 +1,18 @@
 
-import {PipeTransform, ArgumentMetadata, BadRequestException, HttpStatus, Injectable} from '@nestjs/common';
+import {PipeTransform, ArgumentMetadata, Injectable} from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
-import {ValidationError} from './validation.error'
-import { ResponseError } from 'src/shared/response/response.entity';
+import { ValidationError } from '../../shared/response/validation-error.class'
+import { ResponseError } from 'src/shared/response/response.class';
 import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
+
+/**
+ * Validation pipeline which works with class-validator. Catch validation issues and throw
+ * Validation Error which will be caugh and dealth with by AllExpception Filter
+ */
 @Injectable()
 export class CustomValidationPipe implements PipeTransform<any> {
   async transform(value, metadata: ArgumentMetadata) {
-    console.log("AAAAA",value)
-    console.log(metadata)
-   
-
     const { metatype } = metadata;
     if (!metatype || !this.toValidate(metatype)) {
       return value;

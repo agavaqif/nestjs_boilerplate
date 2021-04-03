@@ -11,7 +11,7 @@ import {
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
 import { LoginUserDto } from './dto/login-user.dto';
-import { ValidationError } from 'src/pipes/validationpipes/validation.error';
+import { ValidationError } from 'src/shared/response/validation-error.class';
 import { buildErrorResponse, buildErrors } from 'src/shared/response/response.service';
 
 @Injectable()

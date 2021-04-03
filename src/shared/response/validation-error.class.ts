@@ -1,5 +1,5 @@
-import { BadRequestException, HttpException, HttpStatus } from "@nestjs/common";
-import { ResponseError } from "src/shared/response/response.entity";
+import { HttpStatus } from "@nestjs/common";
+import { ResponseError } from "./response.class";
 
 
 

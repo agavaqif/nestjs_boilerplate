@@ -2,19 +2,21 @@
 import { Catch, ArgumentsHost, HttpStatus, NotFoundException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
-import { ValidationError } from 'src/pipes/validationpipes/validation.error';
-import { ResponseObject } from 'src/shared/response/response.entity';
+import { ValidationError } from 'src/shared/response/validation-error.class';
+import { ResponseObject } from 'src/shared/response/response.class';
 import { buildErrorResponse } from 'src/shared/response/response.service';
 import { extractKeyFromError } from 'src/shared/utils/object-functions.util';
 import { EntityNotFoundError } from 'typeorm';
 
+/**
+ * Carch and handle different types of exceptions.
+ */
 @Catch()
 export class AllExceptionsFilter extends BaseExceptionFilter {
     catch(exception: any, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
-        console.log(exception)
         if(exception instanceof NotFoundException) {
           return this.handleNotFound(exception,response);
         }
