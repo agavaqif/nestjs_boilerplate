@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/shared/auth/service/auth.service';
-import { getManager, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -12,7 +12,8 @@ import {
 } from 'nestjs-typeorm-paginate';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ValidationError } from 'src/shared/response/validation-error.class';
-import { buildErrorResponse, buildErrors } from 'src/shared/response/response.service';
+import { buildErrors } from 'src/shared/response/response.service';
+import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
 
 @Injectable()
 export class UserService {
@@ -59,17 +60,17 @@ export class UserService {
     return true;
   }
 
-  async login(loginDto:LoginUserDto): Promise<User> {
+  async login(loginDto:LoginUserDto): Promise<string> {
     const user: User = await this.findByEmailWhole(loginDto.email);
     if(user) {
       console.log("User is ",user);
       console.log("Loginf dto", loginDto)
       let passwordMatch =await this.authService.comparePasswords(loginDto.password, user.password);
-      if (!passwordMatch) throw new ValidationError(buildErrors("notFound","Password","Password Not found"));
+      if (!passwordMatch) throw new ValidationError(buildErrors(ErrorCode.IS_WRONG,"Password",ErrorMessage.IS_WRONG));
       delete user.password;
-      return user;
+      return this.authService.generateJWT(user);
     }else {
-      throw new ValidationError(buildErrors("notFound","Email","Email Not found"));
+      throw new ValidationError(buildErrors(ErrorCode.NOT_FOUND,"Email",ErrorMessage.NOT_FOUND));
     }
   }
 

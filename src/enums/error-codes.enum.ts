@@ -3,13 +3,16 @@ export  enum ErrorCode {
     NOT_UNIQUE = "notUnique",
     SERVER_ERROR = "serverError",
     NO_DATA = "noData",
-    CANT_UPDATE = "cantUpdate"
+    CANT_UPDATE = "cantUpdate",
+    IS_WRONG = "isWrong"
 }
 
 export  enum ErrorMessage {
-    NOT_FOUND = "Resource was not found",
+    NOT_FOUND = " was not found",
     NOT_UNIQUE = "must be unique",
     SERVER_ERROR = "Server Error",
     NO_DATA = "No Data Provided",
-    CANT_UPDATE = "can't be updated"
+    CANT_UPDATE = "can't be updated",
+    IS_WRONG = "is wrong"
+
 }
