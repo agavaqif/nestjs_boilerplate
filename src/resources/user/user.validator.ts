@@ -4,7 +4,7 @@ import {Injectable} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { ModuleRef } from '@nestjs/core';
-import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
+import { ErrorCode, ErrorMessage } from 'src/enums/error-code.enum';
 
 @ValidatorConstraint({ name: ErrorCode.NOT_UNIQUE, async: true })
 @Injectable()

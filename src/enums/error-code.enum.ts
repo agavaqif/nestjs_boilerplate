@@ -4,7 +4,8 @@ export  enum ErrorCode {
     SERVER_ERROR = "serverError",
     NO_DATA = "noData",
     CANT_UPDATE = "cantUpdate",
-    IS_WRONG = "isWrong"
+    IS_WRONG = "isWrong",
+    UNAUTH = "unAuthorized"
 }
 
 export  enum ErrorMessage {
@@ -13,6 +14,6 @@ export  enum ErrorMessage {
     SERVER_ERROR = "Server Error",
     NO_DATA = "No Data Provided",
     CANT_UPDATE = "can't be updated",
-    IS_WRONG = "is wrong"
-
+    IS_WRONG = "is wrong",
+    UNAUTH = "Unauthorized" 
 }

@@ -13,7 +13,7 @@ import {
 import { LoginUserDto } from './dto/login-user.dto';
 import { ValidationError } from 'src/shared/response/validation-error.class';
 import { buildErrors } from 'src/shared/response/response.service';
-import { ErrorCode, ErrorMessage } from 'src/enums/error-codes.enum';
+import { ErrorCode, ErrorMessage } from 'src/enums/error-code.enum';
 
 @Injectable()
 export class UserService {
@@ -63,8 +63,6 @@ export class UserService {
   async login(loginDto:LoginUserDto): Promise<string> {
     const user: User = await this.findByEmailWhole(loginDto.email);
     if(user) {
-      console.log("User is ",user);
-      console.log("Loginf dto", loginDto)
       let passwordMatch =await this.authService.comparePasswords(loginDto.password, user.password);
       if (!passwordMatch) throw new ValidationError(buildErrors(ErrorCode.IS_WRONG,"Password",ErrorMessage.IS_WRONG));
       delete user.password;

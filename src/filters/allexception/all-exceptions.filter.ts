@@ -1,5 +1,5 @@
 
-import { Catch, ArgumentsHost, HttpStatus, NotFoundException } from '@nestjs/common';
+import { Catch, ArgumentsHost, HttpStatus, NotFoundException, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { ErrorCode, ErrorMessage } from 'src/enums/error-code.enum';
 import { ValidationError } from 'src/shared/response/validation-error.class';
@@ -17,13 +17,17 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
+        console.log(exception)
         if(exception instanceof NotFoundException) {
           return this.handleNotFound(exception,response);
         }
-        if(exception instanceof EntityNotFoundError) {
+        else if (exception instanceof UnauthorizedException || exception instanceof ForbiddenException) {
+          return this.handleUnauth(exception, response);
+        }
+        else if(exception instanceof EntityNotFoundError) {
           return this.handleEntityNotFound(exception,response);
         }
-        if('code' in exception && exception.code == 23505) {
+        else if('code' in exception && exception.code == 23505) {
           return this.handleUniqueConstraint(exception,response);
         }
         else if(exception instanceof ValidationError) {
@@ -34,10 +38,13 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
         }
       }
     handleNotFound(exception: any, response: any) {
-      return response.status(HttpStatus.CONFLICT).json(buildErrorResponse(ErrorCode.NOT_FOUND,'',exception.message));
+      return response.status(HttpStatus.NOT_FOUND).json(buildErrorResponse(ErrorCode.NOT_FOUND,'',exception.message));
+    }
+    handleUnauth(exception: any, response: any){
+      return response.status(HttpStatus.UNAUTHORIZED).json(buildErrorResponse(ErrorCode.UNAUTH,'',ErrorMessage.UNAUTH));
     }
     handleEntityNotFound(exception: any, response: any) {
-        return response.status(HttpStatus.CONFLICT).json(buildErrorResponse(ErrorCode.NOT_FOUND,'',ErrorMessage.NOT_FOUND));
+        return response.status(HttpStatus.NOT_FOUND).json(buildErrorResponse(ErrorCode.NOT_FOUND,'',ErrorMessage.NOT_FOUND));
     }
 
     handleUniqueConstraint(exception: any, response: any) {
