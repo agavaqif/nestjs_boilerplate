@@ -9,7 +9,7 @@ export  enum ErrorCode {
 }
 
 export  enum ErrorMessage {
-    NOT_FOUND = " was not found",
+    NOT_FOUND = "was not found",
     NOT_UNIQUE = "must be unique",
     SERVER_ERROR = "Server Error",
     NO_DATA = "No Data Provided",
