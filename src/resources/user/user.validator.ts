@@ -17,9 +17,7 @@ export class IsUserAlreadyExist implements ValidatorConstraintInterface {
         if (!this.userService) {
             this.userService = this.moduleRef.get('UserService');
           }
-        console.log("Text is",text)
         let user:User = await this.userService.findByEmail(text);
-        console.log(user)
 		return user==undefined;
 	}
     defaultMessage(args: ValidationArguments) {
@@ -33,7 +31,6 @@ export class CantUpdateEmail implements ValidatorConstraintInterface {
 	
     constructor() { }
 	validate(text: string) {
-        console.log("Text is",text)
 		return false;
 	}
     defaultMessage(args: ValidationArguments) {
