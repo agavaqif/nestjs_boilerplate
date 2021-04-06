@@ -1,13 +1,11 @@
-import { IsEmail, IsNotEmpty } from "class-validator"
-import { Entity } from "typeorm"
+import { IsEmail, IsNotEmpty } from "class-validator";
 
-@Entity('user')
-export class LoginUserDto  {
+export class LoginUserDto {
 
-    @IsNotEmpty({message:"Please provide email"})
-    @IsEmail({},{message: "Please use email format"})
-    email:string
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
 
-    @IsNotEmpty({message: "Please provide password"})
-    password:string
+    @IsNotEmpty()
+    password: string;
 }

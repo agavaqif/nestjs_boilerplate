@@ -1,12 +1,17 @@
-import { PartialType,OmitType } from '@nestjs/mapped-types';
-import { Validate } from 'class-validator';
-import { CantUpdateEmail } from '../user.validator';
-import { BaseUserDto } from './base-user.dto';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
+import { IsNotEmpty, Validate } from 'class-validator';
+import { UserRole } from 'src/enums/user-role.enum';
+import { CantUpdate } from '../validator/user.validator.';
+import { CreateUserDto } from './create-user.dto';
 
+export class UpdateUserDto extends PartialType(CreateUserDto) {
+    @Validate(CantUpdate)
+    userId: number;
 
-export class UpdateUserDto extends PartialType(BaseUserDto) {
+    @Validate(CantUpdate)
+    email:string;
 
-    @Validate(CantUpdateEmail)
-    email:string
-   
+    @Validate(CantUpdate)
+    role:UserRole
+
 }

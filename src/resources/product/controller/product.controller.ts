@@ -31,7 +31,7 @@ export class ProductController {
   }
 
   @Get('/:productId')
-  public async findOne(@Param('productId') productId: number): Promise<Product> {
+  public async findById(@Param('productId') productId: number): Promise<Product> {
       return await this.productService.findById(productId);
   }
 

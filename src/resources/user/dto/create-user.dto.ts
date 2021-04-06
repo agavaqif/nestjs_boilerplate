@@ -1,22 +1,20 @@
-import { IsEmail, IsNotEmpty } from "class-validator";
-import { Entity } from "typeorm";
-import { BaseUserDto } from "./base-user.dto";
-import { Validate } from 'class-validator';
-import { IsUserAlreadyExist } from "../user.validator";
+import { IsEmail, IsNotEmpty, IsOptional, Validate } from "class-validator";
+import { UserRole } from "src/enums/user-role.enum";
+import { IsUserAlreadyExist } from "../validator/user.validator.";
 
+export class CreateUserDto {
 
+    @IsNotEmpty()
+    name: string;
 
-@Entity('user')
-export class CreateUserDto extends BaseUserDto {
-
-    @IsNotEmpty({message: "Please provide name"})
-    name:string
-
-    @IsNotEmpty({message:"Please provide email"})
-    @IsEmail({},{message: "Please use email format"})
+    @IsNotEmpty()
+    @IsEmail()
     @Validate(IsUserAlreadyExist)
-    email:string
+    email:string;
 
-    @IsNotEmpty({message: "Please provide password"})
-    password:string
+    @IsNotEmpty()
+    password:string;
+
+    @IsOptional()
+    role: UserRole
 }

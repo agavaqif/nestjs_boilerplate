@@ -17,7 +17,7 @@ export class ProductService {
         return products;
     }
 
-    async findAllPaginated(options: IPaginationOptions): Promise<Pagination<Product>> {
+    public async findAllPaginated(options: IPaginationOptions): Promise<Pagination<Product>> {
         return paginate<Product>(this.productRepository, options);
       }
 
@@ -27,7 +27,6 @@ export class ProductService {
     }
 
     public async create(createProductDto: CreateProductDto): Promise<Product> {
-        // Need to create first to enable subscribers
         const product: Product = await this.productRepository.create(createProductDto);
         return this.productRepository.save(product);
     }

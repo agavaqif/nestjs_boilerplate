@@ -1,8 +1,8 @@
 import {ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface} from 'class-validator';
-import {UserService} from './user.service';
+import {UserService} from '../service/user.service';
 import {Injectable} from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User } from '../entities/user.entity';
 import { ModuleRef } from '@nestjs/core';
 import { ErrorCode, ErrorMessage } from 'src/enums/error-code.enum';
 
@@ -13,28 +13,31 @@ export class IsUserAlreadyExist implements ValidatorConstraintInterface {
 	
     constructor(private readonly moduleRef: ModuleRef) { }
 	async validate(text: string) {
+        console.log("Validating")
+        console.log(text)
         if (text == undefined) return true;
         if (!this.userService) {
             this.userService = this.moduleRef.get('UserService');
           }
         let user:User = await this.userService.findByEmail(text);
+        console.log(user)
 		return user==undefined;
 	}
     defaultMessage(args: ValidationArguments) {
-        return `User Email ${ErrorMessage.NOT_UNIQUE}`;
+        return `${ErrorMessage.NOT_UNIQUE}`;
       }
 
 }
 
 @ValidatorConstraint({ name: ErrorCode.CANT_UPDATE})
-export class CantUpdateEmail implements ValidatorConstraintInterface {
+export class CantUpdate implements ValidatorConstraintInterface {
 	
     constructor() { }
 	validate(text: string) {
 		return false;
 	}
     defaultMessage(args: ValidationArguments) {
-        return `Email ${ErrorMessage.CANT_UPDATE}`;
+        return `${ErrorMessage.CANT_UPDATE}`;
       }
 
 }
