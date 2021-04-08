@@ -2,8 +2,6 @@ import { HttpStatus } from "@nestjs/common";
 import { ResponseError } from "./response.class";
 
 
-
-
 class ValidationError extends Error {
     private status:number = HttpStatus.BAD_REQUEST;
     private errors:ResponseError[];

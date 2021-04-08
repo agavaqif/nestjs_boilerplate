@@ -7,16 +7,24 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from '../service/product.service';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { Product } from '../entities/product.entity';
+import { Roles } from 'src/shared/auth/decorators/role.decorator';
+import { UserRole } from 'src/enums/user-role.enum';
+import { JwtAuthGuard } from 'src/shared/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/shared/auth/guards/role.guard';
 
 @Controller('/api/product')
 export class ProductController {
   constructor(private productService: ProductService) { }
 
+
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   public async findAll(): Promise<Product[]> {
       return await this.productService.findAll();

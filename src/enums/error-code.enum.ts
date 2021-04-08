@@ -9,11 +9,13 @@ export  enum ErrorCode {
 }
 
 export  enum ErrorMessage {
-    NOT_FOUND = "was not found",
-    NOT_UNIQUE = "must be unique",
+    EMAIL_EXIST = "email must be unique",
+    EMAIL_NOT_FOUND = "email not found",
+    PASSWORD_WRONG = "password is wrong",
+    EMAIL_CANT_UPDATE = "email can not be updated",
+    NOT_FOUND = "resource was not found",
+    NOT_UNIQUE = "resource must be unique",    
     SERVER_ERROR = "Server Error",
-    NO_DATA = "No Data Provided",
-    CANT_UPDATE = "can't be updated",
-    IS_WRONG = "is wrong",
+    NO_DATA = "no Data Provided",    
     UNAUTH = "Unauthorized" 
 }

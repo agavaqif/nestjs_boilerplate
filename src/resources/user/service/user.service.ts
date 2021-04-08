@@ -56,11 +56,11 @@ export class UserService {
     const user: User = await this.findByEmailWhole(loginDto.email);
     if(user) {
       let passwordMatch =await this.authService.comparePasswords(loginDto.password, user.password);
-      if (!passwordMatch) throw new ValidationError(buildErrors(ErrorCode.IS_WRONG,"Password",ErrorMessage.IS_WRONG));
+      if (!passwordMatch) throw new ValidationError(buildErrors(ErrorCode.IS_WRONG,"Password",ErrorMessage.PASSWORD_WRONG));
       delete user.password;
       return this.authService.generateJWT(user);
     }else {
-      throw new ValidationError(buildErrors(ErrorCode.NOT_FOUND,"Email",ErrorMessage.NOT_FOUND));
+      throw new ValidationError(buildErrors(ErrorCode.NOT_FOUND,"Email",ErrorMessage.EMAIL_NOT_FOUND));
     }
   }
 
